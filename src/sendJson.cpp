@@ -7,7 +7,7 @@
 
 const String serverName = "https://api.bagtower.bag-era.fr/prod/logs";
 
-void sendJson() {
+void sendJson(const char *id, int value) {
     HTTPClient http;
 
     // Your Domain name with URL path or IP address with path
@@ -27,9 +27,9 @@ void sendJson() {
 
     JsonArray data = doc.createNestedArray("data");
     StaticJsonDocument<200> sousDoc;
-    sousDoc["id"] = "cpu";
+    sousDoc["id"] = id;
     sousDoc["type"] = "number";
-    sousDoc["val"] = 5;
+    sousDoc["val"] = value;
 
     data.add(sousDoc);
     
@@ -39,7 +39,7 @@ void sendJson() {
     Serial.println(requestBody);
     // Send HTTP POST request
     int httpResponseCode = http.POST(requestBody);
-    M5.Lcd.print(String(httpResponseCode) + " ");
+    // M5.Lcd.print(String(httpResponseCode) + " ");
     // String httpResp = http.getString();
     Serial.printf("HTTP status code: %d\n", httpResponseCode);
     // Serial.printf("http string: %s", httpResp.c_str());

@@ -16,4 +16,6 @@ void connectWifi(){
     }
     M5.Lcd.clear();
     M5.Lcd.print("connecté ! ");
+    delay(2000);
+    M5.Lcd.clear();
 }
