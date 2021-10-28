@@ -66,11 +66,20 @@ void setup(){
     Serial.begin(115200);
     M5.Lcd.setTextColor(WHITE);
     M5.Lcd.setTextSize(2);
-    
+    //Ici
     M5.begin();
-
-    delay(5);
-
+    M5.Lcd.clear(BLACK);
+    M5.Lcd.setTextColor(GREEN);
+    M5.Lcd.setTextSize(2);
+    M5.Lcd.setTextSize(2);
+    M5.Lcd.setCursor(80, 50); 
+    M5.Lcd.println("Activation du PIR");
+    Serial.println("Activation du PIR");
+    M5.Lcd.setCursor(65, 10);
+    M5.Lcd.setTextColor(WHITE);
+    pinMode(22, INPUT);    
+      delay(5);
+    //Ici
     M5.Lcd.println("Connexion en cours, veuillez patienter.");
 
     //Connexion au WiFi
@@ -91,17 +100,37 @@ void setup(){
     //Affichage de l'adresse IP 
     M5.Lcd.print("L'ip est: ");
     M5.Lcd.println(WiFi.localIP());
-    delay(10000);
+    delay(1000);
 
     M5.Lcd.clear();
-    M5.Lcd.setCursor(0, 0);
-    M5.Lcd.setTextColor(GREEN);
-    M5.Lcd.println("Connexion API : OK");
+    //M5.Lcd.setCursor(0, 0);
+    //M5.Lcd.setTextColor(GREEN);
+    //M5.Lcd.println("Connexion API : OK");
     
     api();
 }
 
     
 void loop(){
-    delay(500);
+    M5.Lcd.setTextColor(GREEN);
+    M5.Lcd.setCursor(0,25); M5.Lcd.print("Status: ");
+    M5.Lcd.setCursor(0,45); M5.Lcd.print("Valeur: ");
+  
+    M5.Lcd.fillRect(95,25,200,25,BLACK);
+    M5.Lcd.fillRect(95,45,200,25,BLACK);
+  
+  if(digitalRead(22)==1){
+    M5.Lcd.setCursor(95, 25);M5.Lcd.print("Je te detecte");
+    M5.Lcd.setCursor(95, 45);M5.Lcd.print("1");
+    Serial.println("PIR Status: Sensing");
+    Serial.println(" Valeur: 1");
+  }
+  else{
+    M5.Lcd.setCursor(95, 25);M5.Lcd.print("Je te detecte pas");
+    M5.Lcd.setCursor(95, 45);M5.Lcd.print("0");
+    Serial.println("PIR Status: Not Sensed");
+    Serial.println(" Valeur: 0");
+  }
+  delay(500);
+  M5.update();
 }
