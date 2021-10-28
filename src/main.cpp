@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <M5Stack.h>
-// #include <WiFi.h>
+#include <WiFi.h>
 #include <HTTPClient.h>
 #include <time.h>
 #include <ArduinoJson.h>
@@ -11,14 +11,15 @@ HTTPClient http;
 //CO2
 Adafruit_SGP30 sgp;
 long last_millis = 0;
+unsigned sec = (int) millis() / 1000;
 
 const char *ssid = "Huawei P30 Pro";
 const char *pass = "kindermaxi";
 
-// void wifiConnect()
-// {
-//     WiFi.begin(ssid, pass);
-// }
+void wifiConnect()
+{
+    WiFi.begin(ssid, pass);
+}
 
 unsigned long getTime()
 {
@@ -33,7 +34,7 @@ unsigned long getTime()
     return now;
 }
 
-void api()
+void api(int value)
 {
     // Your Domain name with URL path or IP address with path
     http.begin("https://api.bagtower.bag-era.fr/prod/logs");
@@ -48,9 +49,9 @@ void api()
 
     JsonArray data = doc.createNestedArray("data");
     StaticJsonDocument<200> sousDoc;
-    sousDoc["id"] = "patate";
+    sousDoc["id"] = "co2";
     sousDoc["type"] = "percent";
-    sousDoc["val"] = "string";
+    sousDoc["val"] = String(value);
 
     data.add(sousDoc);
 
@@ -75,18 +76,18 @@ void setup()
 
     // M5.Lcd.println("Connexion en cours ...");
 
-    // wifiConnect();
-    // while (WiFi.status() != 3)
-    // {
-    //     yield();
-    // }
+    wifiConnect();
+    while (WiFi.status() != 3)
+    {
+        yield();
+    }
     // M5.Lcd.clear();
-    // M5.Lcd.setCursor(0, 0);
+    // M5.Lcd.setCursdelay(20000);or(0, 0);
     // M5.Lcd.println("Connexion réussie !");
 
-    // configTime(3600, 3600, "pool.ntp.org");
-    // struct tm timeinfo;
-    // getLocalTime(&timeinfo);
+    configTime(3600, 3600, "pool.ntp.org");
+    struct tm timeinfo;
+    getLocalTime(&timeinfo);
     // M5.Lcd.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
 
     // M5.Lcd.print("L'ip est: ");
@@ -99,6 +100,12 @@ void setup()
     M5.Lcd.setTextSize(2);
     M5.Lcd.setCursor(80, 0);
     M5.Lcd.println("TVOC TEST");
+    for (int i = 0; !sgp.begin() && i < 50; i++)
+    {
+        M5.Lcd.print(".");
+        delay(1000);
+    }
+
     if (!sgp.begin())
     { //Init the sensor. 初始化传感器
         M5.Lcd.println("Sensor not found");
@@ -108,13 +115,6 @@ void setup()
     M5.Lcd.setCursor(0, 80);
     M5.Lcd.println("\nInitialization...");
 
-    // api();
-    // M5.Lcd.print("API OK");
-    delay(3000);
-}
-
-void loop()
-{
     static int i = 15;
     while (i > 0)
     {
@@ -126,6 +126,14 @@ void loop()
             M5.Lcd.drawNumber(i, 20, 120, 2);
         }
     }
+
+    // api();
+    // M5.Lcd.print("API OK");
+    delay(3000);
+}
+
+void loop()
+{
     M5.Lcd.fillRect(0, 80, 90, 100, BLACK);
 
     if (!sgp.IAQmeasure())
@@ -137,5 +145,8 @@ void loop()
     M5.Lcd.setCursor(0, 50);
     M5.Lcd.printf("TVOC:%d ppb\n", sgp.TVOC);
     M5.Lcd.printf("eCO2:%d ppm\n", sgp.eCO2);
-    delay(500);
+    if(millis() / 1000 > sec + 10) {
+        sec = (int) millis() / 1000;
+        if(WiFi.status() == WL_CONNECTED) api(sgp.eCO2);
+    }
 }
