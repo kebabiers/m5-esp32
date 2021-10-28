@@ -28,45 +28,32 @@ unsigned long getTime() {
 
 void api(){
     // Your Domain name with URL path or IP address with path
-      http.begin("https://api.bagtower.bag-era.fr/prod/logs");
+    http.begin("https://api.bagtower.bag-era.fr/prod/logs");
 
-      // Specify content-type header
-      http.addHeader("Content-Type", "application/json");
-      http.addHeader("x-api-key", "7ce8BjFztCaFt5q9jdPYLaxtyagBh1xK8iaplrTF");
-      // Data to send with HTTP POST
-      //char httpRequestData[1000];
-      //sprintf(httpRequestData, "{\
-                                'unixTimestamp': %i,\
-                                'data': [\
-                                    {\
-                                    'id': 'patate',\
-                                    'type': 'percent',\
-                                    'val': 'string'\
-                                    }\
-                                ],\
-                                'UTCTimestamp': 'string',\
-                                'deviceId': '6f34c9b0-1791-1:3089fe40-3656-11ec-8'\
-                                }", getTime());
+    // Specify content-type header
+    http.addHeader("Content-Type", "application/json");
+    http.addHeader("x-api-key", "7ce8BjFztCaFt5q9jdPYLaxtyagBh1xK8iaplrTF");
+    // Data to send with HTTP POST
     StaticJsonDocument<200> doc;
-        doc["deviceId"] = "6f34c9b0-1791-1:3089fe40-3656-11ec-8";
-        doc["unixTimestamp"] = getTime();
+    doc["deviceId"] = "6f34c9b0-1791-1:3089fe40-3656-11ec-8";
+    doc["unixTimestamp"] = getTime();
 
-        JsonArray data = doc.createNestedArray("data");
-        StaticJsonDocument<200> sousDoc;
-        sousDoc["id"] = "patate";
-        sousDoc["type"] = "percent";
-        sousDoc["val"] = "string";
+    JsonArray data = doc.createNestedArray("data");
+    StaticJsonDocument<200> sousDoc;
+    sousDoc["id"] = "patate";
+    sousDoc["type"] = "percent";
+    sousDoc["val"] = "string";
 
-        data.add(sousDoc);
+    data.add(sousDoc);
 
-        String requestBody;
-        serializeJson(doc, requestBody);
+    String requestBody;
+    serializeJson(doc, requestBody);
 
-      // Send HTTP POST request
-      int httpResponseCode = http.POST(requestBody);
-      Serial.println(requestBody);
-      Serial.println(httpResponseCode);
-      
+    // Send HTTP POST request
+    int httpResponseCode = http.POST(requestBody);
+    Serial.println(requestBody);
+    Serial.println(httpResponseCode);
+
 }
 
 void setup(){
