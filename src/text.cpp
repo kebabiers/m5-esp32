@@ -4,9 +4,20 @@
 #include <Arduino.h>
 #include "text.h"
 #include <M5Stack.h>
+#include <sensor.h>
 
 #define DEFAULT_TEXT_SIZE 2
 #define DEFAULT_TEXT_COLOR TFT_WHITE
+
+uint8_t checkBtn() {
+
+  M5.update();
+
+  if(M5.BtnA.isPressed()) return 0;
+  //if(M5.BtnB.isPressed()) return 1;
+  if(M5.BtnC.isPressed()) return 2;
+
+}
 
 void initDisplay() {
   M5.begin(true, false, true, true);
@@ -79,6 +90,20 @@ void createCritAir(unsigned x, unsigned y, unsigned s, unsigned val) {
   M5.Lcd.drawString(message, x - (M5.Lcd.textWidth(String(message)) / 2), y + s + 4);
 
   M5.Lcd.setTextSize(DEFAULT_TEXT_SIZE);
+}
+
+void showSensor(int sensor, int value) {
+  switch (sensor)
+  {
+  case 0: createCritAir(TFT_HEIGHT / 2, (TFT_WIDTH / 2 - 40), 80, ppm2Critair(value));
+    break;
+  case 1: displayText("Appui bouton 1", 0, 0);
+    break;
+  case 2: displayText("Appui bouton 2", 0, 0);
+    break;
+  default:
+    break;
+  }
 }
 
 #endif

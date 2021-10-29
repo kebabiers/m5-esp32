@@ -3,6 +3,7 @@
 
 #include "api.h"
 #include <HTTPClient.h>
+#include <config.h>
 
 int send2API(char *json, const char *apiURL, const char *apiKey) {
   HTTPClient http;
@@ -33,6 +34,16 @@ void createJSON(int val, char *output, const char *deviceID, const char *name, u
 
   memcpy(output, json, sizeof(json));
 
+}
+
+int sendValue(int value, const char *deviceID, const char *name) {
+    time_t timestamp;
+    time(&timestamp);
+
+    char json[1000];
+    createJSON(value, json, DEVICE_ID, DEVICE_NAME, timestamp);
+    // return send2API(json, API_URL, API_KEY);
+    return 0;
 }
 
 #endif

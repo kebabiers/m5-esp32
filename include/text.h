@@ -10,5 +10,7 @@ void clearDisplay();
 void clearDisplay(int, int, int, int);
 void displayProgressBar(int, int, int, int, int);
 void createCritAir(unsigned, unsigned, unsigned, unsigned);
+void showSensor(int, int);
+uint8_t checkBtn();
 
 #endif

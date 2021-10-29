@@ -18,17 +18,19 @@ int initSensor(int type) {
     default:
         break;
     }
+
+    return -1;
 }
 
 int getSensorValue(int type) {
 
-    int r;
+    int r = -1;
     switch (type)
     {
     case 0: r = getC02value();
         break;
     
-    default:
+    default: r = -1;
         break;
     }
 
@@ -66,10 +68,10 @@ int getC02value() {
 unsigned ppm2Critair(unsigned ppm) {
 
     if(ppm > 1000) return 5;
-    if(ppm > 800) return 4;
-    if(ppm > 600) return 3;
-    if(ppm > 500) return 2;
-    if(ppm > 450) return 1;
+    if(ppm > 800)  return 4;
+    if(ppm > 600)  return 3;
+    if(ppm > 500)  return 2;
+    if(ppm > 450)  return 1;
 
     return 0;
 }
