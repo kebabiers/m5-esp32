@@ -1,3 +1,5 @@
+// le fichier main du micro
+
 #include <Arduino.h>
 #include <M5Stack.h>
 #include <driver/i2s.h>
@@ -188,8 +190,8 @@ void MicroPhoneFFT()
 }
 
 void setupMicro() {
-    M5.begin(true, true, true, true);
-    M5.Power.begin();
     header("PDM Unit", BLACK);
     microPhoneSetup();
 }
+
+//peut etre fftvaluebuff

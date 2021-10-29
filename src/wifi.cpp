@@ -6,6 +6,8 @@
 const char *ssid = "Thomas";
 const char *pass = "vx3wcejfb";
 
+
+// se connecte au wifi
 void connectWifi(){
     WiFi.begin(ssid, pass);
     M5.Lcd.print("connection en cours...");
