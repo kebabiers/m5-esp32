@@ -160,7 +160,7 @@ void microPhoneSetup()
     DisFFTbuff.createSprite(320,54);
 }
 
-void MicroPhoneFFT()
+int MicroPhoneFFT()
 {
     uint8_t FFTValueBuff[24];
     xQueueReceive( fftvalueQueue, (void * )&FFTValueBuff, portMAX_DELAY );
@@ -188,6 +188,11 @@ void MicroPhoneFFT()
         }
     }
     DisFFTbuff.pushSprite(20, 120);
+    // for(int i = 0; i < 24; i++) {
+    //     Serial.printf("%i : %i \n", i, FFTValueBuff[i]);
+    // }
+    Serial.printf("decibel : %i \n" , FFTValueBuff[23]*10);
+    return FFTValueBuff[23]*10;
 }
 
 void setupMicro() {

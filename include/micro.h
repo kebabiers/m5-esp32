@@ -2,6 +2,6 @@
 #define MICRO
 
 void setupMicro();
-void MicroPhoneFFT();
+int MicroPhoneFFT();
 
 #endif
