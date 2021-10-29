@@ -15,7 +15,7 @@ const char *pass = "sech38dzk";
 void wifiConnect() {
     WiFi.begin(ssid, pass);
 }
-
+//Temps
 unsigned long getTime() {
   time_t now;
   struct tm timeinfo;
@@ -43,9 +43,9 @@ void api(){
 
     //Création du sous-dossier
     StaticJsonDocument<200> sousDoc;
-    sousDoc["id"] = "patate";
+    sousDoc["id"] = "merguez";
     sousDoc["type"] = "percent";
-    sousDoc["val"] = "string";
+    sousDoc["val"] = 10;
 
     data.add(sousDoc);
 
@@ -89,8 +89,11 @@ void setup(){
     }
     M5.Lcd.clear();
     M5.Lcd.setCursor(0, 0);
-    M5.Lcd.println("Connexion réussi, vous avez accès à Internet.");
-
+    M5.Lcd.setTextColor(GREEN);
+    M5.Lcd.setTextSize(2);
+    M5.Lcd.println("laisse moi tranquille");
+    M5.Lcd.println("sinon conflit");
+    delay(10000);
     //Connexion au serveur NTP
     configTime(3600, 3600, "pool.ntp.org");
     struct tm timeinfo;
@@ -100,13 +103,13 @@ void setup(){
     //Affichage de l'adresse IP 
     M5.Lcd.print("L'ip est: ");
     M5.Lcd.println(WiFi.localIP());
-    delay(1000);
+    delay(10000);
 
     M5.Lcd.clear();
     //M5.Lcd.setCursor(0, 0);
     //M5.Lcd.setTextColor(GREEN);
     //M5.Lcd.println("Connexion API : OK");
-    
+    Serial.println("JE VEUX TE VOIR");
     api();
 }
 
