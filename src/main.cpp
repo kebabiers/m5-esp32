@@ -54,10 +54,11 @@ void loop() {
 #endif
   if(millis() / 1000 > sec + SEND_DELAY) {
 
-    int value = getSensorValue(SENSOR);
+    //int value = getSensorValue(SENSOR);
     clearDisplay();
-    displayText(String(value).c_str(), 10, 10);
-    displayProgressBar(0, 20, TFT_HEIGHT, 10, value);
+    //displayText(String(value).c_str(), 10, 10);
+    //displayProgressBar(0, 20, TFT_HEIGHT, 10, value);
+    createCritAir(TFT_HEIGHT / 2, TFT_WIDTH / 2, 100, 3);
     time_t timestamp;
     time(&timestamp);
     // Serial.println(sec);

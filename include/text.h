@@ -9,5 +9,6 @@ void displayText(const char *, int, int);
 void clearDisplay();
 void clearDisplay(int, int, int, int);
 void displayProgressBar(int, int, int, int, int);
+void createCritAir(unsigned, unsigned, unsigned, unsigned);
 
 #endif
