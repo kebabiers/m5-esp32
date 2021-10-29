@@ -10,5 +10,6 @@ int initCO2(unsigned);
 int waitSensor(unsigned);
 int getC02value();
 int getSensorValue(int);
+unsigned ppm2Critair(unsigned);
 
 #endif

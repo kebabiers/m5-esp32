@@ -40,30 +40,44 @@ void displayProgressBar(int x, int y, int w, int h, int val) {
 
 void createCritAir(unsigned x, unsigned y, unsigned s, unsigned val) {
   int color = TFT_BLUE;
-  M5.Lcd.setTextSize(10);
+  M5.Lcd.setTextSize(s / 10);
+
+  char message[20];
+  sprintf(message, "CRIT'AIR %i", val);
+
+  uint16_t cwidth = M5.Lcd.textWidth(String(val)); // Find the pixel width of the string in the font
+  uint16_t cheight = 8 * M5.Lcd.textsize;
 
   switch (val)
   {
-  case 0: color = TFT_GREEN;
+  case 0: color = 0x2649;
     break;
-  case 1: color = TFT_PURPLE;
+  case 1: color = 0xE8FB;
     break;
-  case 2: color = TFT_YELLOW;
+  case 2: color = 0xEFE0;
     break;
-  case 3: color = TFT_ORANGE;
+  case 3: color = 0xFC00;
     break;
-  case 4: color = TFT_RED;
+  case 4: color = 0xCB24;
     break;
-  case 5: color = TFT_LIGHTGREY;
+  case 5: color = 0x8C51;
     break;
   default:
     break;
   }
+  Serial.printf("color : %x", color);
   M5.Lcd.fillCircle(x, y, s, color);
   for(int i = 0; i < 5; i++) {
     M5.Lcd.drawCircle(x, y, ((s / 3) * 2) + i, TFT_WHITE);
   }
-  M5.Lcd.drawNumber(val, x - (M5.Lcd.textsize / 2), y - (M5.Lcd.textsize / 2));
+  M5.Lcd.textbgcolor = color;
+  M5.Lcd.drawNumber(val, x - (cwidth / 2), y - (cheight / 2));
+
+  M5.Lcd.textbgcolor = TFT_BLACK;
+  M5.Lcd.setTextSize(M5.Lcd.textsize / 2);
+  //M5.Lcd.setTextDatum(1);
+  M5.Lcd.drawString(message, x - (M5.Lcd.textWidth(String(message)) / 2), y + s + 4);
+
   M5.Lcd.setTextSize(DEFAULT_TEXT_SIZE);
 }
 

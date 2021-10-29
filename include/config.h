@@ -9,7 +9,7 @@
 #define SSID "Dnis !"
 #define PASS "TrouveMonCodeBB" 
 
-#define SEND_DELAY 10
+#define SEND_DELAY 1
 
 #define CO2 0
 #define MIC 1

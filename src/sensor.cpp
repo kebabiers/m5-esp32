@@ -63,4 +63,15 @@ int getC02value() {
     return sgp.eCO2;
 }
 
+unsigned ppm2Critair(unsigned ppm) {
+
+    if(ppm > 1000) return 5;
+    if(ppm > 800) return 4;
+    if(ppm > 600) return 3;
+    if(ppm > 500) return 2;
+    if(ppm > 450) return 1;
+
+    return 0;
+}
+
 #endif
