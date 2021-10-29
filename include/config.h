@@ -11,4 +11,11 @@
 
 #define SEND_DELAY 10
 
+#define CO2 0
+#define MIC 1
+#define PIR 2
+#define CAM 3
+
+#define SENSOR CO2
+
 #endif
