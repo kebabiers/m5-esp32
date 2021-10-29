@@ -1,4 +1,3 @@
-// le fichier main du micro
 
 #include <Arduino.h>
 #include <M5Stack.h>
@@ -9,6 +8,8 @@
 #define PIN_DATA 21
 
 #define MODE_MIC 0
+
+// le fichier main du micro
 
 TFT_eSprite DisFFTbuff =  TFT_eSprite(&M5.Lcd);
 static QueueHandle_t fftvalueQueue = nullptr;
