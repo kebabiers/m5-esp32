@@ -3,9 +3,14 @@
 
 Adafruit_SGP30 sgp;
 long last_millis = 0;
+
+
+// crée la variable sec qui détermine ce qu'est une seconde (pour le delay dans la main)
 unsigned sec = (int) millis() / 1000;
 
 void setupCo2() {
+
+    //balec
     M5.Lcd.setTextSize(2);
     M5.Lcd.setCursor(80,0);
     M5.Lcd.println("TVOC TEST");
@@ -16,6 +21,7 @@ void setupCo2() {
     M5.Lcd.setCursor(0,80);
     M5.Lcd.println("\nInitialization...");
 
+    //petite boucle de 15 secondes pour laisser le temps au capteru de s'initialiser
     static int i = 15;
     while (i > 0)
     {
@@ -29,6 +35,8 @@ void setupCo2() {
     }
 }
 
+
+// fonction qui récupère et affiche les valeurs TVOC et eCo2, elle return uniquement eCo2
 int loopCo2() {
     M5.Lcd.fillRect(0, 80, 90, 100, BLACK);
 
